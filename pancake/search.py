@@ -1,38 +1,64 @@
+from queue import PriorityQueue
+
 from search_node import search_node
 
 
 def create_open_set():
-    pass
+    prime =PriorityQueue()
+    return prime
 
 
 def create_closed_set():
-    pass
+    close =[]
+    return close
 
 
 def add_to_open(vn, open_set):
-    pass
+    open_set.put(vn)
 
 
 def open_not_empty(open_set):
-    pass
+    return not open_set.empty()
 
 
 def get_best(open_set):
-    pass
+    return open_set.get()
 
 
 def add_to_closed(vn, closed_set):
-    pass
+    return  closed_set.append(vn)
 
 #returns False if curr_neighbor state not in open_set or has a lower g from the node in open_set
 #remove the node with the higher g from open_set (if exists)
 def duplicate_in_open(vn, open_set):
-    pass
+    nodes_to_remove = []
+    for node in open_set.queue:
+        if node.state.get_state_str() == vn.state.get_state_str() and node.g <= vn.g:
+            nodes_to_remove.append(node)
+
+    for node in nodes_to_remove:
+        open_set.queue.remove(node)
+
+    return bool(nodes_to_remove)
+
+
+
+
 
 #returns False if curr_neighbor state not in closed_set or has a lower g from the node in closed_set
 #remove the node with the higher g from closed_set (if exists)
 def duplicate_in_closed(vn, closed_set):
-    pass
+    nodes_to_remove = []
+    for node in closed_set:
+        if node.state.get_state_str() == vn.state.get_state_str() and node.g <= vn.g:
+            nodes_to_remove.append(node)
+
+    for node in nodes_to_remove:
+        closed_set.remove(node)
+
+    return bool(nodes_to_remove)
+
+
 
 def print_path(path):
     for i in range(len(path)-1):
